@@ -2,11 +2,13 @@ module NodeJS
 
 using BinDeps
 
+export run_node
+
 @BinDeps.load_dependencies
 
 function run_node(cmd::AbstractString)
-    node_path = BinDeps.node[1][2]
-    run(`$node_path $cmd`)
+    node_path = node[1][2]
+    readstring(`$node_path $cmd`)
 end
 
 end # module
