@@ -2,4 +2,4 @@
 *.jl.*.cov
 *.jl.mem
 deps/downloads/*
-deps/node*
+deps/usr/*
