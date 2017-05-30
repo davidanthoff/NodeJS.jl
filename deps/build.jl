@@ -34,7 +34,11 @@ function install_binaries(file_base, file_ext, binary_dir)
 
     function test_step()
         try
-            run(`$(joinpath(prefix, binary_name)) --version`)
+            if is_windows()
+                run(`$(joinpath(prefix, binary_name)) --version`)
+            else
+                run(`$(joinpath(prefix, "bin", binary_name)) --version`)
+            end
         catch e
             error("""
 Running the precompiled node binary failed with the error
