@@ -27,8 +27,7 @@ function install_binaries(file_base, file_ext, binary_dir)
     else
         install_step = () -> begin
             for file in readdir(binary_path)
-                symlink(joinpath(binary_path, file), 
-                        joinpath(prefix, "bin", file))
+                symlink(joinpath(binary_path, file), joinpath(prefix, "bin", file))
             end
         end
     end
@@ -53,7 +52,7 @@ To build from source instead, run:
                 FileUnpacker(joinpath(basedir, "downloads", filename),
                              joinpath(basedir, "downloads"), 
                              "")
-                CreateDirectory(prefix)
+                CreateDirectory(joinpath(prefix, "bin"))
                 install_step
                 test_step
             end))
