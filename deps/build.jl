@@ -16,7 +16,7 @@ else
 end
 
 binary_target_path = is_windows() ? joinpath(prefix, binary_name) : joinpath(prefix, "bin", binary_name)
-npm_binary_target_path = is_windows() ? joinpath(prefix, binary_name) : joinpath(prefix, "bin", npm_binary_name)
+npm_binary_target_path = is_windows() ? joinpath(prefix, npm_binary_name) : joinpath(prefix, "bin", npm_binary_name)
 
 function install_binaries(file_base, file_ext, binary_dir)
     filename = "$(file_base).$(file_ext)"
