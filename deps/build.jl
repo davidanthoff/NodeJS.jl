@@ -9,8 +9,10 @@ base_url = "https://nodejs.org/dist/v$nodejs_version"
 
 @static if is_windows()
     binary_name = "node.exe"
+    npm_binary_name = "npm.cmd"
 else
     binary_name = "node"
+    npm_binary_name = "npm"
 end
 
 function install_binaries(file_base, file_ext, binary_dir)
@@ -141,6 +143,7 @@ run(process)
 open(joinpath(dirname(@__FILE__), "deps.jl"), "w") do f
     write(f, """
 const node_executable = "$(escape_string(joinpath(prefix, binary_name)))"
+const npm_executable = "$(escape_string(joinpath(prefix, npm_binary_name)))"
 """)
 
 end
