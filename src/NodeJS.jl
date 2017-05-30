@@ -1,6 +1,6 @@
 module NodeJS
 
-export run_node, node_exe
+export nodejs_cmd, npm_cmd
 
 depsjl = joinpath(@__DIR__, "..", "deps", "deps.jl")
 if !isfile(depsjl)
@@ -9,18 +9,18 @@ else
     include(depsjl)
 end
 
-function node_exe()
+"""
+Return the full path of the node command.
+"""
+function nodejs_cmd()
     return node_executable
 end
 
-function run_node(cmd::AbstractString)
-    readstring(`$node_executable $cmd`)
-end
-
-function run_npm(command::AbstractString, dir::AbstractString)    
-    cmd = Cmd(`$npm_executable $command`, dir=dir)
-    println(cmd)
-    readstring(cmd)
+"""
+Return the full path of the npm command.
+"""
+function npm_cmd()
+    return npm_executable
 end
 
 end # module
