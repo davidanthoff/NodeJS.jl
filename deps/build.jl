@@ -19,6 +19,7 @@ function install_binaries(file_base, file_ext, binary_dir)
     filename = "$(file_base).$(file_ext)"
     url = "$(base_url)/$(filename)"
     binary_path = joinpath(basedir, "downloads", file_base, binary_dir)
+    binary_target_path = is_windows() ? joinpath(prefix, binary_name) : joinpath(prefix, "bin", binary_name)
 
     @static if is_windows()
         install_step = () -> begin
@@ -28,19 +29,13 @@ function install_binaries(file_base, file_ext, binary_dir)
         end
     else
         install_step = () -> begin
-            for file in readdir(binary_path)
-                symlink(joinpath(binary_path, file), joinpath(prefix, "bin", file))
-            end
+            symlink(joinpath(basedir, "downloads", file_base), prefix)
         end
     end
 
     function test_step()
         try
-            if is_windows()
-                run(`$(joinpath(prefix, binary_name)) --version`)
-            else
-                run(`$(joinpath(prefix, "bin", binary_name)) --version`)
-            end
+            run(`$binary_target_path --version`)
         catch e
             error("""
 Running the precompiled node binary failed with the error
@@ -52,13 +47,12 @@ To build from source instead, run:
         end
     end
     (@build_steps begin
-        FileRule(joinpath(prefix, binary_name), 
+        FileRule(binary_target_path, 
             (@build_steps begin
                 FileDownloader(url, joinpath(basedir, "downloads", filename))
                 FileUnpacker(joinpath(basedir, "downloads", filename),
                              joinpath(basedir, "downloads"), 
                              "")
-                CreateDirectory(joinpath(prefix, "bin"))
                 install_step
                 test_step
             end))
