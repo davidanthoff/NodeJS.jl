@@ -1,14 +1,16 @@
 module NodeJS
 
-using BinDeps
-
 export run_node
 
-@BinDeps.load_dependencies
+depsjl = joinpath(@__DIR__, "..", "deps", "deps.jl")
+if !isfile(depsjl)
+    error("NodeJS not properly installed. Please run\nPkg.build(\"NodeJS\")")
+else
+    include(depsjl)
+end
 
 function run_node(cmd::AbstractString)
-    node_path = node[1][2]
-    readstring(`$node_path $cmd`)
+    readstring(`$node_executable $cmd`)
 end
 
 end # module
