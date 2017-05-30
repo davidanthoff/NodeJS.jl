@@ -23,9 +23,9 @@ function install_binaries(file_base, file_ext, binary_dir)
     url = "$(base_url)/$(filename)"
     binary_path = joinpath(basedir, "downloads", file_base, binary_dir)
     
-
     @static if is_windows()
         install_step = () -> begin
+            mkdir(prefix)
             for dir in readdir(dirname(binary_path))
                 cp(string("\\\\?\\", joinpath(dirname(binary_path), dir)), string("\\\\?\\", joinpath(prefix, dir)), remove_destination=true)
             end
