@@ -41,8 +41,8 @@ function install_binaries(file_base, file_ext, binary_dir)
 Running the precompiled node binary failed with the error
 $(e)
 To build from source instead, run:
-    julia> ENV["CMAKEWRAPPER_JL_BUILD_FROM_SOURCE"] = 1
-    julia> Pkg.build("CMakeWrapper")
+    julia> ENV["NODEJSWRAPPER_JL_BUILD_FROM_SOURCE"] = 1
+    julia> Pkg.build("NodeJS")
 """)
         end
     end
@@ -82,7 +82,7 @@ end
 #     end)
 # end
 
-force_source_build = false # lowercase(get(ENV, "CMAKEWRAPPER_JL_BUILD_FROM_SOURCE", "")) in ["1", "true"]
+force_source_build = false # lowercase(get(ENV, "NODEJSWRAPPER_JL_BUILD_FROM_SOURCE", "")) in ["1", "true"]
 
 # "https://nodejs.org/dist/v6.10.3/node-v6.10.3-win-x64.zip"
 # "https://nodejs.org/dist/v6.10.3/node-v6.10.3-darwin-x64.tar.gz"
@@ -90,19 +90,28 @@ force_source_build = false # lowercase(get(ENV, "CMAKEWRAPPER_JL_BUILD_FROM_SOUR
 
 process = @static if is_linux()
     if Sys.ARCH == :x86_64 && !force_source_build
-        install_binaries(
-            "cmake-$(nodejs_version)-Linux-x86_64",
-            "tar.gz",
-            "bin")
+        if sizeof(Int) == 8
+            install_binaries(
+                "node-v$(nodejs_version)-linux-x64",
+                "tar.xz",
+                "bin")
+        elseif sizeof(Int) == 4
+            install_binaries(
+                "node-v$(nodejs_version)-linux-x86",
+                "tar.xz",
+                "bin")
+        else
+            error("Only 32- or 64-bit architectures are supported")
+        end
     else
         install_from_source("cmake-$(nodejs_version)", "tar.gz")
     end
 elseif is_apple()
     if !force_source_build
         install_binaries(
-            "cmake-$(nodejs_version)-Darwin-x86_64",
+            "node-v$(nodejs_version)-darwin-x64",
             "tar.gz",
-            joinpath("CMake.app", "Contents", "bin"))
+            "bin")
     else
         install_from_source("cmake-$(nodejs_version)", "tar.gz")
     end
