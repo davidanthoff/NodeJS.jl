@@ -1,3 +1,4 @@
+using Compat
 using BinDeps
 using BinDeps: MakeTargets
 
