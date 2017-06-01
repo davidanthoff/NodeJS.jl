@@ -92,7 +92,7 @@ force_source_build = false # lowercase(get(ENV, "NODEJSWRAPPER_JL_BUILD_FROM_SOU
 # "https://nodejs.org/dist/v6.10.3/node-v6.10.3-linux-x64.tar.xz"
 
 process = @static if is_linux()
-    if Sys.ARCH == :x86_64 && !force_source_build
+    if (Sys.ARCH == :x86_64 || Sys.ARCH == :x86_32) && !force_source_build
         if sizeof(Int) == 8
             install_binaries(
                 "node-v$(nodejs_version)-linux-x64",
