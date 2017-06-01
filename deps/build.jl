@@ -60,7 +60,8 @@ To build from source instead, run:
     end)
 end
 
-# function install_from_source(file_base, file_ext)
+function install_from_source(file_base, file_ext)
+    error("Building NodeJS from source is currently not supported.")
 #     filename = "$(file_base).$(file_ext)"
 #     url = "$(base_url)/$(filename)"
 
@@ -80,9 +81,9 @@ end
 #                 end
 #             end))
 #     end)
-# end
+end
 
-force_source_build = false # lowercase(get(ENV, "NODEJSWRAPPER_JL_BUILD_FROM_SOURCE", "")) in ["1", "true"]
+force_source_build = lowercase(get(ENV, "NODEJSWRAPPER_JL_BUILD_FROM_SOURCE", "")) in ["1", "true"]
 
 # "https://nodejs.org/dist/v6.10.3/node-v6.10.3-win-x64.zip"
 # "https://nodejs.org/dist/v6.10.3/node-v6.10.3-darwin-x64.tar.gz"
