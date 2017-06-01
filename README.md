@@ -3,6 +3,9 @@
 [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![Build Status](https://travis-ci.org/davidanthoff/NodeJS.jl.svg?branch=master)](https://travis-ci.org/davidanthoff/NodeJS.jl)
 [![Build status](https://ci.appveyor.com/api/projects/status/5o398n4i1ug23v4s/branch/master?svg=true)](https://ci.appveyor.com/project/davidanthoff/nodejs-jl/branch/master)
+[![NodeJS](http://pkg.julialang.org/badges/NodeJS_0.4.svg)](http://pkg.julialang.org/?pkg=NodeJS)
+[![NodeJS](http://pkg.julialang.org/badges/NodeJS_0.5.svg)](http://pkg.julialang.org/?pkg=NodeJS)
+[![NodeJS](http://pkg.julialang.org/badges/NodeJS_0.6.svg)](http://pkg.julialang.org/?pkg=NodeJS)
 [![codecov.io](http://codecov.io/github/davidanthoff/NodeJS.jl/coverage.svg?branch=master)](http://codecov.io/github/davidanthoff/NodeJS.jl?branch=master)
 
 ## Overview
