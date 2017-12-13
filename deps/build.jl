@@ -5,7 +5,7 @@ using BinDeps: MakeTargets
 basedir = @__DIR__
 prefix = joinpath(basedir, "usr")
 
-nodejs_version = v"8.9.1"
+nodejs_version = v"8.9.3"
 base_url = "https://nodejs.org/dist/v$nodejs_version"
 
 @static if is_windows()
