@@ -1,3 +1,6 @@
+# NodeJS.jl v0.1.1 Release Notes
+* Update Node to v8.9.3
+
 # NodeJS.jl v0.1.0 Release Notes
 * Update Node to v8.9.1
 
