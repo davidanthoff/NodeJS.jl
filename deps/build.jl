@@ -79,14 +79,10 @@ if !isfile(binary_target_path)
         cd(bin_folder) do
             read(`7z x $download_filename_full`)
         end
-    elseif is_apple()
-        cd(bin_folder) do
-            run(`gunzip -c $download_filename_full | tar xopf -`)
-        end
+    elseif is_linux()
+        run(pipeline(`unxz -c $download_filename_full `, `tar xv --directory=$bin_folder`))
     else
-        cd(bin_folder) do
-            run(`tar -xzf $download_filename_full`)
-        end
+        run(`tar -xzf $download_filename_full --directory=$bin_folder`)
     end
 end
 
