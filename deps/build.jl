@@ -53,6 +53,7 @@ binary_target_path = is_windows() ? joinpath(install_folder, binary_name) : join
 
 # Do we need to download?
 if !isfile(download_filename_full)
+    info("Downloading Node.js binary")
     rm(download_folder, force=true, recursive=true)
 
     download(x) = run(BinDeps.download_cmd(x, basename(x)))
@@ -65,6 +66,7 @@ if !isfile(download_filename_full)
 end
 
 if !isfile(binary_target_path)
+    info("Extracting Node.js binary")
     if is_windows()
         rm(string("\\\\?\\", bin_folder), force=true, recursive=true)
     else
