@@ -80,9 +80,9 @@ if !isfile(binary_target_path)
             read(`7z x $download_filename_full`)
         end
     elseif is_linux()
-        run(pipeline(`unxz -c $download_filename_full `, `tar xv --directory=$bin_folder`))
+        read(pipeline(`unxz -c $download_filename_full `, `tar xv --directory=$bin_folder`))
     else
-        run(`tar -xzf $download_filename_full --directory=$bin_folder`)
+        read(`tar -xzf $download_filename_full --directory=$bin_folder`)
     end
 end
 
