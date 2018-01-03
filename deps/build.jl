@@ -1,11 +1,46 @@
-using Compat
 using BinDeps
-using BinDeps: MakeTargets
+using Compat
 
+const nodejs_version = v"8.9.3"
 basedir = @__DIR__
-prefix = joinpath(basedir, "usr")
 
-nodejs_version = v"8.9.3"
+if is_linux()
+    if (Sys.ARCH in (:x86_64, :i686, :i586, :i486, :i386)) && sizeof(Int) == 8
+        download_filename_base = "node-v$(nodejs_version)-linux-x64"
+        download_filename_ext = "tar.xz"
+    elseif (Sys.ARCH in (:x86_64, :i686, :i586, :i486, :i386)) && sizeof(Int) == 4
+        download_filename_base = "node-v$(nodejs_version)-linux-x86"
+        download_filename_ext = "tar.xz"
+    else
+        error("Unsupported platform.")
+    end
+elseif is_apple()
+    download_filename_base = "node-v$(nodejs_version)-darwin-x64"
+    download_filename_ext = "tar.gz"
+elseif is_windows()
+    if sizeof(Int) == 8
+        download_filename_base = "node-v$(nodejs_version)-win-x64"
+        download_filename_ext = "zip"
+    elseif sizeof(Int) == 4
+        download_filename_base = "node-v$(nodejs_version)-win-x86"
+        download_filename_ext = "zip"
+    else
+        error("Unsupported platform.")
+    end
+else
+    error("Unsupported platform.")
+end
+download_folder = joinpath(basedir, "downloads")
+download_filename_full = joinpath(download_folder, "$download_filename_base.$download_filename_ext")
+
+bin_folder = joinpath(basedir, "bin")
+
+install_folder = joinpath(bin_folder, download_filename_base)
+
+# "https://nodejs.org/dist/v6.10.3/node-v6.10.3-win-x64.zip"
+# "https://nodejs.org/dist/v6.10.3/node-v6.10.3-darwin-x64.tar.gz"
+# "https://nodejs.org/dist/v6.10.3/node-v6.10.3-linux-x64.tar.xz"
+
 base_url = "https://nodejs.org/dist/v$nodejs_version"
 
 @static if is_windows()
@@ -14,129 +49,44 @@ else
     binary_name = "node"
 end
 
-binary_target_path = is_windows() ? joinpath(prefix, binary_name) : joinpath(prefix, "bin", binary_name)
+binary_target_path = is_windows() ? joinpath(install_folder, binary_name) : joinpath(install_folder, "bin", binary_name)
 
-function install_binaries(file_base, file_ext, binary_dir)
-    filename = "$(file_base).$(file_ext)"
-    url = "$(base_url)/$(filename)"
-    binary_path = joinpath(basedir, "downloads", file_base, binary_dir)
-    
-    @static if is_windows()
-        install_step = () -> begin
-            mkdir(prefix)
-            for dir in readdir(dirname(binary_path))
-                cp(string("\\\\?\\", joinpath(dirname(binary_path), dir)), string("\\\\?\\", joinpath(prefix, dir)), remove_destination=true)
-            end
-        end
-    else
-        install_step = () -> begin
-            symlink(joinpath(basedir, "downloads", file_base), prefix)
-        end
-    end
+# Do we need to download?
+if !isfile(download_filename_full)
+    info("Downloading Node.js binary")
+    rm(download_folder, force=true, recursive=true)
 
-    function test_step()
-        try
-            run(`$binary_target_path --version`)
-        catch e
-            error("""
-Running the precompiled node binary failed with the error
-$(e)
-To build from source instead, run:
-    julia> ENV["NODEJSWRAPPER_JL_BUILD_FROM_SOURCE"] = 1
-    julia> Pkg.build("NodeJS")
-""")
-        end
+    download(x) = run(BinDeps.download_cmd(x, basename(x)))
+
+    mkpath(download_folder)
+
+    cd(download_folder) do
+        download("$base_url/$download_filename_base.$download_filename_ext")
     end
-    (@build_steps begin
-        FileRule(binary_target_path, 
-            (@build_steps begin
-                FileDownloader(url, joinpath(basedir, "downloads", filename))
-                FileUnpacker(joinpath(basedir, "downloads", filename),
-                             joinpath(basedir, "downloads"), 
-                             "")
-                install_step
-                test_step
-            end))
-    end)
 end
 
-function install_from_source(file_base, file_ext)
-    error("Building NodeJS from source is currently not supported.")
-#     filename = "$(file_base).$(file_ext)"
-#     url = "$(base_url)/$(filename)"
+if !isfile(binary_target_path)
+    info("Extracting Node.js binary")
+    if is_windows()
+        rm(string("\\\\?\\", bin_folder), force=true, recursive=true)
+    else
+        rm(bin_folder, force=true, recursive=true)
+    end
 
-#     (@build_steps begin
-#         FileRule(joinpath(prefix, "bin", binary_name), 
-#             (@build_steps begin
-#                 FileDownloader(url, joinpath(basedir, "downloads", filename))
-#                 CreateDirectory(joinpath(basedir, "src"))
-#                 FileUnpacker(joinpath(basedir, "downloads", filename),
-#                              joinpath(basedir, "src"), 
-#                              "")
-#                 begin
-#                     ChangeDirectory(joinpath(basedir, "src", file_base))
-#                     `./configure --prefix=$(prefix)`
-#                     MakeTargets()
-#                     MakeTargets("install")
-#                 end
-#             end))
-#     end)
-end
+    mkpath(bin_folder)
 
-force_source_build = lowercase(get(ENV, "NODEJSWRAPPER_JL_BUILD_FROM_SOURCE", "")) in ["1", "true"]
-
-# "https://nodejs.org/dist/v6.10.3/node-v6.10.3-win-x64.zip"
-# "https://nodejs.org/dist/v6.10.3/node-v6.10.3-darwin-x64.tar.gz"
-# "https://nodejs.org/dist/v6.10.3/node-v6.10.3-linux-x64.tar.xz"
-
-process = @static if is_linux()
-    if (Sys.ARCH in (:x86_64, :i686, :i586, :i486, :i386)) && !force_source_build
-        if sizeof(Int) == 8
-            install_binaries(
-                "node-v$(nodejs_version)-linux-x64",
-                "tar.xz",
-                "bin")
-        elseif sizeof(Int) == 4
-            install_binaries(
-                "node-v$(nodejs_version)-linux-x86",
-                "tar.xz",
-                "bin")
-        else
-            error("Only 32- or 64-bit architectures are supported")
+    if is_windows()
+        cd(bin_folder) do
+            read(`7z x $download_filename_full`)
         end
+    elseif is_linux()
+        read(pipeline(`unxz -c $download_filename_full `, `tar xv --directory=$bin_folder`))
     else
-        install_from_source("cmake-$(nodejs_version)", "tar.gz")
+        read(`tar -xzf $download_filename_full --directory=$bin_folder`)
     end
-elseif is_apple()
-    if !force_source_build
-        install_binaries(
-            "node-v$(nodejs_version)-darwin-x64",
-            "tar.gz",
-            "bin")
-    else
-        install_from_source("cmake-$(nodejs_version)", "tar.gz")
-    end
-elseif is_windows()
-    if sizeof(Int) == 8
-        install_binaries(
-            "node-v$(nodejs_version)-win-x64",
-            "zip",
-            "bin")
-    elseif sizeof(Int) == 4
-        install_binaries(
-            "node-v$(nodejs_version)-win-x86",
-            "zip",
-            "bin")
-    else
-        error("Only 32- or 64-bit architectures are supported")
-    end
-else
-    error("Sorry, I couldn't recognize your operating system.")
 end
 
-run(process)
-
-npm_script_target_path = is_windows() ? joinpath(prefix, "node_modules", "npm", "bin", "npm-cli.js") : joinpath(prefix, "lib", "node_modules", "npm", "bin", "npm-cli.js")
+npm_script_target_path = is_windows() ? joinpath(install_folder, "node_modules", "npm", "bin", "npm-cli.js") : joinpath(install_folder, "lib", "node_modules", "npm", "bin", "npm-cli.js")
 
 open(joinpath(dirname(@__FILE__), "deps.jl"), "w") do f
     write(f, """
