@@ -1,7 +1,5 @@
 module NodeJS
 
-using Compat
-
 export nodejs_cmd, npm_cmd
 
 depsjl = joinpath(@__DIR__, "..", "deps", "deps.jl")

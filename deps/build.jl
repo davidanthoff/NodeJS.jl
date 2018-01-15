@@ -1,5 +1,4 @@
 using BinDeps
-using Compat
 
 const nodejs_version = v"8.9.3"
 basedir = @__DIR__
