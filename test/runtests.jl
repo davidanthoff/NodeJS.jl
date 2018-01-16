@@ -1,4 +1,3 @@
-using Compat
 using NodeJS
 using Base.Test
 
