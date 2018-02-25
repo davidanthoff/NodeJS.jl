@@ -1,6 +1,6 @@
 using BinDeps
 
-const nodejs_version = v"8.9.3"
+const nodejs_version = v"8.9.4"
 basedir = @__DIR__
 
 if is_linux()
