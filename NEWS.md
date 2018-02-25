@@ -1,3 +1,6 @@
+# NodeJS.jl v0.3.0 Release Notes
+* Update Node to v8.9.4
+
 # NodeJS.jl v0.2.0 Release Notes
 * Replace build.jl script with something with less output
 
