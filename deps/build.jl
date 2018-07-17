@@ -75,7 +75,7 @@ if !isfile(binary_target_path)
         cd(bin_folder) do
             read(`$(joinpath(Sys.BINDIR, "7z")) x $download_filename_full`)
         end
-    elseif Sys.()
+    elseif Sys.islinux()
         read(pipeline(`unxz -c $download_filename_full `, `tar xv --directory=$bin_folder`))
     else
         read(`tar -xzf $download_filename_full --directory=$bin_folder`)
