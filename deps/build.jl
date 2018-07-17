@@ -50,7 +50,7 @@ binary_target_path = Sys.iswindows() ? joinpath(install_folder, binary_name) : j
 
 # Do we need to download?
 if !isfile(download_filename_full)
-    info("Downloading Node.js binary")
+    @info("Downloading Node.js binary")
     rm(download_folder, force=true, recursive=true)
 
     mkpath(download_folder)
@@ -62,7 +62,7 @@ if !isfile(download_filename_full)
 end
 
 if !isfile(binary_target_path)
-    info("Extracting Node.js binary")
+    @info("Extracting Node.js binary")
     if Sys.iswindows()
         rm(string("\\\\?\\", bin_folder), force=true, recursive=true)
     else
