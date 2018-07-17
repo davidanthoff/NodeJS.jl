@@ -1,3 +1,4 @@
+__precompile__()
 module NodeJS
 
 export nodejs_cmd, npm_cmd

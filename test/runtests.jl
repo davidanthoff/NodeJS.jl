@@ -1,9 +1,9 @@
 using NodeJS
-using Base.Test
+using Test
 
 @testset "NodeJS" begin
 
-@test chomp(readstring(`$(nodejs_cmd()) -v`)) == "v8.10.0"
-@test chomp(readstring(`$(npm_cmd()) -v`)) == "5.6.0"
+@test chomp(read(`$(nodejs_cmd()) -v`, String)) == "v8.11.3"
+@test chomp(read(`$(npm_cmd()) -v`, String)) == "5.6.0"
 
 end

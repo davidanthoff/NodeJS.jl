@@ -1,9 +1,7 @@
-using BinDeps
-
-const nodejs_version = v"8.10.0"
+const nodejs_version = v"8.11.3"
 basedir = @__DIR__
 
-if is_linux()
+if Sys.islinux()
     if (Sys.ARCH in (:x86_64, :i686, :i586, :i486, :i386)) && sizeof(Int) == 8
         download_filename_base = "node-v$(nodejs_version)-linux-x64"
         download_filename_ext = "tar.xz"
@@ -13,10 +11,10 @@ if is_linux()
     else
         error("Unsupported platform.")
     end
-elseif is_apple()
+elseif Sys.isapple()
     download_filename_base = "node-v$(nodejs_version)-darwin-x64"
     download_filename_ext = "tar.gz"
-elseif is_windows()
+elseif Sys.iswindows()
     if sizeof(Int) == 8
         download_filename_base = "node-v$(nodejs_version)-win-x64"
         download_filename_ext = "zip"
@@ -42,31 +40,30 @@ install_folder = joinpath(bin_folder, download_filename_base)
 
 base_url = "https://nodejs.org/dist/v$nodejs_version"
 
-@static if is_windows()
+@static if Sys.iswindows()
     binary_name = "node.exe"
 else
     binary_name = "node"
 end
 
-binary_target_path = is_windows() ? joinpath(install_folder, binary_name) : joinpath(install_folder, "bin", binary_name)
+binary_target_path = Sys.iswindows() ? joinpath(install_folder, binary_name) : joinpath(install_folder, "bin", binary_name)
 
 # Do we need to download?
 if !isfile(download_filename_full)
     info("Downloading Node.js binary")
     rm(download_folder, force=true, recursive=true)
 
-    download(x) = run(BinDeps.download_cmd(x, basename(x)))
-
     mkpath(download_folder)
 
     cd(download_folder) do
-        download("$base_url/$download_filename_base.$download_filename_ext")
+        download_url = "$base_url/$download_filename_base.$download_filename_ext"
+        download(download_url, basename(download_url))
     end
 end
 
 if !isfile(binary_target_path)
     info("Extracting Node.js binary")
-    if is_windows()
+    if Sys.iswindows()
         rm(string("\\\\?\\", bin_folder), force=true, recursive=true)
     else
         rm(bin_folder, force=true, recursive=true)
@@ -74,18 +71,18 @@ if !isfile(binary_target_path)
 
     mkpath(bin_folder)
 
-    if is_windows()
+    if Sys.iswindows()
         cd(bin_folder) do
-            read(`7z x $download_filename_full`)
+            read(`$(joinpath(Sys.BINDIR, "7z")) x $download_filename_full`)
         end
-    elseif is_linux()
+    elseif Sys.()
         read(pipeline(`unxz -c $download_filename_full `, `tar xv --directory=$bin_folder`))
     else
         read(`tar -xzf $download_filename_full --directory=$bin_folder`)
     end
 end
 
-npm_script_target_path = is_windows() ? joinpath(install_folder, "node_modules", "npm", "bin", "npm-cli.js") : joinpath(install_folder, "lib", "node_modules", "npm", "bin", "npm-cli.js")
+npm_script_target_path = Sys.iswindows() ? joinpath(install_folder, "node_modules", "npm", "bin", "npm-cli.js") : joinpath(install_folder, "lib", "node_modules", "npm", "bin", "npm-cli.js")
 
 open(joinpath(dirname(@__FILE__), "deps.jl"), "w") do f
     write(f, """
