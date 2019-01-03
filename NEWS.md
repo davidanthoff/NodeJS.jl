@@ -1,3 +1,7 @@
+# NodeJS.jl v0.6.0 Release Notes
+* Add support for ARM binaries
+* Update Node to v10.15.0
+
 # NodeJS.jl v0.5.1 Release Notes
 * Drop precompile statement
 
