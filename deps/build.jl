@@ -8,6 +8,12 @@ if Sys.islinux()
     elseif (Sys.ARCH in (:x86_64, :i686, :i586, :i486, :i386)) && sizeof(Int) == 4
         download_filename_base = "node-v$(nodejs_version)-linux-x86"
         download_filename_ext = "tar.xz"
+    elseif (Sys.ARCH in (:arm,)) && sizeof(Int) == 8
+        download_filename_base = "node-v$(nodejs_version)-linux-arm64"
+        download_filename_ext = "tar.xz"
+    elseif (Sys.ARCH in (:arm,)) && sizeof(Int) == 4
+        download_filename_base = "node-v$(nodejs_version)-linux-armv7l"
+        download_filename_ext = "tar.xz"
     else
         error("Unsupported platform.")
     end
