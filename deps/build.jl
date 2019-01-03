@@ -1,4 +1,4 @@
-const nodejs_version = v"8.11.3"
+const nodejs_version = v"10.15.0"
 basedir = @__DIR__
 
 if Sys.islinux()
