@@ -6,3 +6,4 @@ deps/usr
 deps/deps.jl
 deps/bin/*
 deps/build.log
+.vscode
