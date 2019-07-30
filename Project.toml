@@ -1,6 +1,6 @@
 name = "NodeJS"
 uuid = "2bd173c7-0d6d-553b-b6af-13a54713934c"
-version = "0.7.0"
+version = "0.7.1-DEV"
 
 [compat]
 julia = "0.7, 1"
