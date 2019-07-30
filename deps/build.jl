@@ -90,7 +90,7 @@ if !isfile(binary_target_path)
     end
 end
 
-npm_script_target_path = Sys.iswindows() ? joinpath(install_folder, "node_modules", "npm", "bin", "npm-cli.js") : joinpath(install_folder, "lib", "node_modules", "npm", "bin", "npm-cli.js")
+npm_script_target_path = Sys.iswindows() ? joinpath(install_folder, "node_modules", "npm", "bin", "npm-cli.js") : joinpath(install_folder, "bin", "npm")
 npm_executable_path = Sys.iswindows() ? joinpath(install_folder, npm_binary_name) : joinpath(install_folder, "bin", npm_binary_name)
 
 open(joinpath(dirname(@__FILE__), "deps.jl"), "w") do f
