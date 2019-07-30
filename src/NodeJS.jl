@@ -27,7 +27,7 @@ end
 Return the full path of the npm command.
 """
 function npm_cmd()
-    return Cmd(`$(nodejs_cmd()) $(npm_script())`)
+    return Cmd(`$npm_executable_path`)
 end
 
 
