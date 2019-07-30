@@ -1,3 +1,7 @@
+# NodeJS.jl v0.7.0 Release Notes
+* Change how npm is accessed
+* Update Node to v10.16.0
+
 # NodeJS.jl v0.6.0 Release Notes
 * Add support for ARM binaries
 * Update Node to v10.15.0
