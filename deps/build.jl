@@ -1,5 +1,11 @@
-const nodejs_version = v"10.16.0"
+const nodejs_version = v"12.13.0"
 basedir = @__DIR__
+
+if isdefined(Base, :LIBEXECDIR)
+    const exe7z = joinpath(Sys.BINDIR, Base.LIBEXECDIR, "7z.exe")
+else
+    const exe7z = joinpath(Sys.BINDIR, "7z.exe")
+end
 
 if Sys.islinux()
     if (Sys.ARCH in (:x86_64, :i686, :i586, :i486, :i386)) && sizeof(Int) == 8
@@ -80,11 +86,6 @@ if !isfile(binary_target_path)
     mkpath(bin_folder)
 
     if Sys.iswindows()
-        if isdefined(Base, :LIBEXECDIR)
-            const exe7z = joinpath(Sys.BINDIR, Base.LIBEXECDIR, "7z.exe")
-        else
-            const exe7z = joinpath(Sys.BINDIR, "7z.exe")
-        end
 
         cd(bin_folder) do
             read(`$exe7z x $download_filename_full`)
