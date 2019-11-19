@@ -1,6 +1,7 @@
-# NodeJS.jl v0.7.0 Release Notes
+# NodeJS.jl v1.0.0 Release Notes
+* Update to Node 12.13.0
+* Fix Julia 1.3 bug on Windows
 * Change how npm is accessed
-* Update Node to v10.16.0
 * Update to Project.toml
 
 # NodeJS.jl v0.6.0 Release Notes
