@@ -80,8 +80,14 @@ if !isfile(binary_target_path)
     mkpath(bin_folder)
 
     if Sys.iswindows()
+        if isdefined(Base, :LIBEXECDIR)
+            const exe7z = joinpath(Sys.BINDIR, Base.LIBEXECDIR, "7z.exe")
+        else
+            const exe7z = joinpath(Sys.BINDIR, "7z.exe")
+        end
+
         cd(bin_folder) do
-            read(`$(joinpath(Sys.BINDIR, "7z")) x $download_filename_full`)
+            read(`$exe7z x $download_filename_full`)
         end
     elseif Sys.islinux()
         read(pipeline(`unxz -c $download_filename_full `, `tar xv --directory=$bin_folder`))
