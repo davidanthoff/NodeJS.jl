@@ -9,8 +9,10 @@ const nodejs_path = artifact"nodejs_app"
 const node_exe_name = Sys.iswindows() ? "node.exe" : "node"
 const npm_exe_name = Sys.iswindows() ? "npm.cmd" : "npm"
 
-const node_executable_path = isfile(joinpath(nodejs_path, node_exe_name)) ? joinpath(nodejs_path, node_exe_name) : node_exe_name
-const npm_executable_path = isfile(joinpath(nodejs_path, npm_exe_name)) ? joinpath(nodejs_path, npm_exe_name) : npm_exe_name
+const use_system_node = !isfile(joinpath(nodejs_path, node_exe_name))
+
+const node_executable_path = use_system_node ? node_exe_name : joinpath(nodejs_path, node_exe_name)
+const npm_executable_path = use_system_node ? npm_exe_name : joinpath(nodejs_path, npm_exe_name)
 
 """
 Return the full path of the node command.

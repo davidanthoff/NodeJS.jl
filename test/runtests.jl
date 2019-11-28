@@ -3,7 +3,12 @@ using Test
 
 @testset "NodeJS" begin
 
-@test chomp(read(`$(nodejs_cmd()) -v`, String)) == "v12.13.1"
-@test chomp(read(`$(npm_cmd()) -v`, String)) == "6.12.1"
+node_v = chomp(read(`$(nodejs_cmd()) -v`, String))
+npm_v = chomp(read(`$(npm_cmd()) -v`, String))
+
+if !NodeJS.use_system_node
+    @test node_v == "v12.13.1"
+    @test npm_v == "6.12.1"
+end
 
 end
