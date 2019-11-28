@@ -4,15 +4,21 @@ using Pkg.Artifacts
 
 export nodejs_cmd, npm_cmd
 
-const nodejs_path = artifact"nodejs_app"
+function conditional_nodejs_load()
+    try
+        return artifact"nodejs_app"
+    catch error
+        return nothing
+    end
+end
+
+const nodejs_path = conditional_nodejs_load()
 
 const node_exe_name = Sys.iswindows() ? "node.exe" : "node"
 const npm_exe_name = Sys.iswindows() ? "npm.cmd" : "npm"
 
-const use_system_node = !isfile(joinpath(nodejs_path, node_exe_name))
-
-const node_executable_path = use_system_node ? node_exe_name : joinpath(nodejs_path, node_exe_name)
-const npm_executable_path = use_system_node ? npm_exe_name : joinpath(nodejs_path, npm_exe_name)
+const node_executable_path = nodejs_path===nothing ? node_exe_name : joinpath(nodejs_path, node_exe_name)
+const npm_executable_path = nodejs_path===nothing ? npm_exe_name : joinpath(nodejs_path, npm_exe_name)
 
 """
 Return the full path of the node command.
