@@ -1,13 +1,16 @@
 module NodeJS
 
+using Pkg.Artifacts
+
 export nodejs_cmd, npm_cmd
 
-depsjl = joinpath(@__DIR__, "..", "deps", "deps.jl")
-if !isfile(depsjl)
-    error("NodeJS not properly installed. Please run\nPkg.build(\"NodeJS\")")
-else
-    include(depsjl)
-end
+const nodejs_path = artifact"nodejs_app"
+
+const node_exe_name = Sys.iswindows() ? "node.exe" : "node"
+const npm_exe_name = Sys.iswindows() ? "npm.cmd" : "npm"
+
+const node_executable_path = isfile(joinpath(nodejs_path, node_exe_name)) ? joinpath(nodejs_path, node_exe_name) : node_exe_name
+const npm_executable_path = isfile(joinpath(nodejs_path, npm_exe_name)) ? joinpath(nodejs_path, npm_exe_name) : npm_exe_name
 
 """
 Return the full path of the node command.
@@ -17,18 +20,10 @@ function nodejs_cmd()
 end
 
 """
-Return the full path of the npm script.
-"""
-function npm_script()
-    return npm_script_path
-end
-
-"""
 Return the full path of the npm command.
 """
 function npm_cmd()
-    return Sys.iswindows() ? Cmd(`$npm_executable_path`) : Cmd(`$(nodejs_cmd()) $(npm_script())`)
+    return `$npm_executable_path`
 end
-
 
 end # module
