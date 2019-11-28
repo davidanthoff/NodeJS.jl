@@ -31,7 +31,7 @@ end
 Return the full path of the npm command.
 """
 function npm_cmd()
-    return `$npm_executable_path`
+    return Sys.iswindows() ? `$npm_executable_path` : `$node_executable_path $npm_executable_path`
 end
 
 end # module
