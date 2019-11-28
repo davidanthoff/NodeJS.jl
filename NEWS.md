@@ -1,3 +1,8 @@
+# NodeJS.jl v1.1.0 Release Notes
+* Use artifact system
+* Drop support for Julia versions pre 1.3
+* Update to Node 12.13.1
+
 # NodeJS.jl v1.0.0 Release Notes
 * Update to Node 12.13.0
 * Fix Julia 1.3 bug on Windows
