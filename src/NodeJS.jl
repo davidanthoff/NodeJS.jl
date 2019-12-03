@@ -8,7 +8,7 @@ export nodejs_cmd, npm_cmd
 function conditional_nodejs_load()
     artifact_info = artifact_meta("nodejs_app", joinpath(@__DIR__, "..", "Artifacts.toml"))
 
-    artifact_info ===nothing && return nothing
+    artifact_info === nothing && return nothing
 
     return artifact_path(SHA1(artifact_info["git-tree-sha1"]))
 end
