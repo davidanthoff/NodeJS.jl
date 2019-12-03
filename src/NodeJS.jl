@@ -1,15 +1,16 @@
 module NodeJS
 
 using Pkg.Artifacts
+import Base: SHA1
 
 export nodejs_cmd, npm_cmd
 
 function conditional_nodejs_load()
-    try
-        return artifact"nodejs_app"
-    catch error
-        return nothing
-    end
+    artifact_info = artifact_meta("nodejs_app", joinpath(@__DIR__, "..", "Artifacts.toml"))
+
+    artifact_info ===nothing && return nothing
+
+    return artifact_path(SHA1(artifact_info["git-tree-sha1"]))
 end
 
 const nodejs_path = conditional_nodejs_load()
