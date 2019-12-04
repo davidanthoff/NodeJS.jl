@@ -1,6 +1,6 @@
 name = "NodeJS"
 uuid = "2bd173c7-0d6d-553b-b6af-13a54713934c"
-version = "1.1.1-DEV"
+version = "1.1.2-DEV"
 
 [deps]
 Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
