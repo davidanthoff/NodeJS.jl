@@ -5,8 +5,8 @@ libc = "glibc"
 os = "linux"
 
     [[nodejs_app.download]]
-    sha256 = "1cf76146f354adbab26558df312e007f08c093cb88935d269e5dd0cd81aaf7a5"
-    url = "https://github.com/davidanthoff/NodeJSBuilder/releases/download/v12.13.1%2B5/NodeJS-12.13.1+5-x86_64-linux-gnu.tar.gz"
+    sha256 = "5565299fe2724c47492f8c741550d66c3aea44c04ce3a921b6215467f9f050d5"
+    url = "https://github.com/davidanthoff/NodeJSBuilder/releases/download/v12.13.1%2B7/NodeJS-12.13.1+7-x86_64-linux-gnu.tar.gz"
 [[nodejs_app]]
 arch = "armv7l"
 git-tree-sha1 = "1c34252d18c54983939b984366c6eaff381562c4"
@@ -14,8 +14,8 @@ libc = "glibc"
 os = "linux"
 
     [[nodejs_app.download]]
-    sha256 = "a704f41f1000f5789c8fc7f0b0e48d0ed03cb0410cc69df326258831355ed03c"
-    url = "https://github.com/davidanthoff/NodeJSBuilder/releases/download/v12.13.1%2B5/NodeJS-12.13.1+5-arm-linux-gnueabihf.tar.gz"
+    sha256 = "67ca353903f9c8b4575aa54aefb02c9cbf28e606409cf3d6873b59ff8465aaa4"
+    url = "https://github.com/davidanthoff/NodeJSBuilder/releases/download/v12.13.1%2B7/NodeJS-12.13.1+7-arm-linux-gnueabihf.tar.gz"
 [[nodejs_app]]
 arch = "powerpc64le"
 git-tree-sha1 = "ae4a19e2d0b2fea41713e72d4bcc44578c10883b"
@@ -23,8 +23,8 @@ libc = "glibc"
 os = "linux"
 
     [[nodejs_app.download]]
-    sha256 = "173242225e56c04fe02bf028f37a2b522bc952c17c6ed638a33aaa940b4dc050"
-    url = "https://github.com/davidanthoff/NodeJSBuilder/releases/download/v12.13.1%2B5/NodeJS-12.13.1+5-powerpc64le-linux-gnu.tar.gz"
+    sha256 = "baffb3634843979b145165f250d5da7aae26c65d572fcff52ec72f3e4b0d6d07"
+    url = "https://github.com/davidanthoff/NodeJSBuilder/releases/download/v12.13.1%2B7/NodeJS-12.13.1+7-powerpc64le-linux-gnu.tar.gz"
 [[nodejs_app]]
 arch = "x86_64"
 git-tree-sha1 = "a42f5c72a500a8683c08a5e818d27a104fc9cd5a"
@@ -32,8 +32,8 @@ libc = "musl"
 os = "linux"
 
     [[nodejs_app.download]]
-    sha256 = "546147b77e5daef642fe14c09093c43f0a91517d7c8c93d2c8f39a0c42f608c0"
-    url = "https://github.com/davidanthoff/NodeJSBuilder/releases/download/v12.13.1%2B5/NodeJS-12.13.1+5-x86_64-linux-musl.tar.gz"
+    sha256 = "5565299fe2724c47492f8c741550d66c3aea44c04ce3a921b6215467f9f050d5"
+    url = "https://github.com/davidanthoff/NodeJSBuilder/releases/download/v12.13.1%2B7/NodeJS-12.13.1+7-x86_64-linux-musl.tar.gz"
 [[nodejs_app]]
 arch = "armv7l"
 git-tree-sha1 = "1c34252d18c54983939b984366c6eaff381562c4"
@@ -41,29 +41,29 @@ libc = "musl"
 os = "linux"
 
     [[nodejs_app.download]]
-    sha256 = "e6f2c8d305765a99139034da38ad947eada19b508ff8af4162592537f5f9b8bf"
-    url = "https://github.com/davidanthoff/NodeJSBuilder/releases/download/v12.13.1%2B5/NodeJS-12.13.1+5-arm-linux-musleabihf.tar.gz"
+    sha256 = "67ca353903f9c8b4575aa54aefb02c9cbf28e606409cf3d6873b59ff8465aaa4"
+    url = "https://github.com/davidanthoff/NodeJSBuilder/releases/download/v12.13.1%2B7/NodeJS-12.13.1+7-arm-linux-musleabihf.tar.gz"
 [[nodejs_app]]
 arch = "x86_64"
 git-tree-sha1 = "1f34757b37b4d557365669ed69ebb5253d959e20"
 os = "macos"
 
     [[nodejs_app.download]]
-    sha256 = "f49eb21c4ed7363aea4e2966919fe942153cd850532f26524fc937dc89350f4a"
-    url = "https://github.com/davidanthoff/NodeJSBuilder/releases/download/v12.13.1%2B5/NodeJS-12.13.1+5-x86_64-apple-darwin14.tar.gz"
+    sha256 = "b96fe448aa2366abe245cd55bfd105a7b582c81ae9e4192b2bafb15c64b50047"
+    url = "https://github.com/davidanthoff/NodeJSBuilder/releases/download/v12.13.1%2B7/NodeJS-12.13.1+7-x86_64-apple-darwin14.tar.gz"
 [[nodejs_app]]
 arch = "i686"
-git-tree-sha1 = "b9090bcf0b909eab7d35a2aca58a98765c7fe4dd"
+git-tree-sha1 = "7d1abc3372f2fbfaf06aadbde91768ea5c25e2a0"
 os = "windows"
 
     [[nodejs_app.download]]
-    sha256 = "73ea18ad36d0df2569bc18182f4615ee894e3f327f8fb0630450efc25a160a90"
-    url = "https://github.com/davidanthoff/NodeJSBuilder/releases/download/v12.13.1%2B5/NodeJS-12.13.1+5-i686-w64-mingw32.tar.gz"
+    sha256 = "2b486d095007548d6fb7293e08fe106299b88d3983e5a50d4538dcc950662b3b"
+    url = "https://github.com/davidanthoff/NodeJSBuilder/releases/download/v12.13.1%2B7/NodeJS-12.13.1+7-i686-w64-mingw32.tar.gz"
 [[nodejs_app]]
 arch = "x86_64"
-git-tree-sha1 = "345df2b824d1eacefab89d560a9e929ff24c0537"
+git-tree-sha1 = "4afb036594093dcdfa354194e7fa3142db6d87f9"
 os = "windows"
 
     [[nodejs_app.download]]
-    sha256 = "c4bdb7c9bf039d192862d1860625210fe2a8fefc522024792fc505dcd02f7661"
-    url = "https://github.com/davidanthoff/NodeJSBuilder/releases/download/v12.13.1%2B5/NodeJS-12.13.1+5-x86_64-w64-mingw32.tar.gz"
+    sha256 = "1d781d6069544b1aef63d21d6e6a792fc6d39b224b97f26fef2fd08bbe4baf88"
+    url = "https://github.com/davidanthoff/NodeJSBuilder/releases/download/v12.13.1%2B7/NodeJS-12.13.1+7-x86_64-w64-mingw32.tar.gz"
