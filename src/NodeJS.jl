@@ -1,7 +1,7 @@
 module NodeJS
 
 using Pkg.Artifacts
-import Base: SHA1
+import Base:SHA1
 
 export nodejs_cmd, npm_cmd
 
