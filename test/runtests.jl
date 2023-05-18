@@ -7,8 +7,8 @@ using Test
     npm_v = chomp(read(`$(npm_cmd()) -v`, String))
 
     if NodeJS.nodejs_path !== nothing
-        @test node_v == "v12.22.1"
-        @test npm_v == "6.14.12"
+        @test node_v == "v18.16.0"
+        @test npm_v == "9.5.1"
     end
 
 end
