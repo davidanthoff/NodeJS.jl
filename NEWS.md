@@ -1,3 +1,6 @@
+# NodeJS.jl v2.0.0 Release Notes
+* Update to Node 18.16.0
+
 # NodeJS.jl v1.1.0 Release Notes
 * Use artifact system
 * Drop support for Julia versions pre 1.3
