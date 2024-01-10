@@ -3,7 +3,7 @@ module NodeJS
 using Pkg.Artifacts
 import Base: SHA1
 
-export nodejs_cmd, npm_cmd
+export nodejs_cmd, npm_cmd, npx_cmd
 
 function conditional_nodejs_load()
     artifact_info = artifact_meta("nodejs_app", joinpath(@__DIR__, "..", "Artifacts.toml"))
@@ -17,9 +17,11 @@ const nodejs_path = conditional_nodejs_load()
 
 const node_exe_name = Sys.iswindows() ? "node.exe" : "node"
 const npm_exe_name = Sys.iswindows() ? "npm.cmd" : "npm"
+const npx_exe_name = Sys.iswindows() ? "npx.cmd" : "npx"
 
 const node_executable_path = nodejs_path === nothing ? node_exe_name : Sys.iswindows() ? joinpath(nodejs_path, node_exe_name) : joinpath(nodejs_path, "bin", node_exe_name)
 const npm_executable_path = nodejs_path === nothing ? npm_exe_name : Sys.iswindows() ? joinpath(nodejs_path, npm_exe_name) : joinpath(nodejs_path, "bin", npm_exe_name)
+const npx_executable_path = nodejs_path === nothing ? npx_exe_name : Sys.iswindows() ? joinpath(nodejs_path, npx_exe_name) : joinpath(nodejs_path, "bin", npx_exe_name)
 
 """
 Return the full path of the node command.
@@ -38,6 +40,19 @@ function npm_cmd()
         return `$npm_executable_path`
     else
         return `$node_executable_path $npm_executable_path`
+    end
+end
+
+"""
+Return the full path of the npx command.
+"""
+function npx_cmd()
+    if nodejs_path === nothing
+        return `npx`
+    elseif Sys.iswindows()
+        return `$npx_executable_path`
+    else
+        return `$node_executable_path $npx_executable_path`
     end
 end
 
